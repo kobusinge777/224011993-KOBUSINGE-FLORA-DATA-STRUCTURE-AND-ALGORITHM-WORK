@@ -17,20 +17,6 @@ popped_irembo = stack_irembo.pop()
 print(f"\nUndo operation (pop): removed '{popped_irembo}'")
 print("Remaining stack (bottom->top):", stack_irembo)
 
-# Screenshot-style output for practical 1
-print("\n+------------------------------+")
-print("|  SCREENSHOT: IREMBO STACK   |")
-print("+------------------------------+")
-print("| After pushing: ['Fill Form',|")
-print("|                'Upload File',|")
-print("|                'Confirm']   |")
-print("| After undo (pop): 'Confirm' |")
-print("| Remaining (bottom->top):     |")
-for item in stack_irembo:
-    print(f"|   {item.ljust(24)}|")
-print("+------------------------------+\n")
-
-
 # ---------- Stack Practical 2 (UR student) ----------
 print("=== Stack Practical 2: UR student ===")
 stack_ur = []
@@ -45,19 +31,6 @@ popped_ur = stack_ur.pop()
 print(f"\nPopped (removed): '{popped_ur}'")
 top_after_pop = stack_ur[-1] if stack_ur else None
 print("Top after pop:", top_after_pop)
-
-# Screenshot-style output for practical 2
-print("\n+---------------------------+")
-print("|  SCREENSHOT: UR STACK    |")
-print("+---------------------------+")
-print("| After pushing: ['Class1',|")
-print("|                'Class2', |")
-print("|                'Class3'] |")
-print("| After pop: 'Class3'      |")
-print("| Top now:                 |")
-print(f"|   {str(top_after_pop).ljust(23)}|")
-print("+---------------------------+\n")
-
 
 # ---------- Challenge: Reverse "ICTRWANDA" using a stack ----------
 print("=== Challenge: Reverse 'ICTRWANDA' using a stack ===")
@@ -137,3 +110,206 @@ print("  LIFO order delivered:", lifo_delivery_order)
 
 # End of demonstrations
 print("\n=== End of code demonstrations ===")
+STDOUT/STDERR
+=== Stack Practical 1: Irembo ===
+Pushing sequence: ['Fill Form', 'Upload File', 'Confirm']
+  Pushed -> Fill Form    | Stack now (bottom->top): ['Fill Form']
+  Pushed -> Upload File  | Stack now (bottom->top): ['Fill Form', 'Upload File']
+  Pushed -> Confirm      | Stack now (bottom->top): ['Fill Form', 'Upload File', 'Confirm']
+
+Undo operation (pop): removed 'Confirm'
+Remaining stack (bottom->top): ['Fill Form', 'Upload File']
+
+=== Stack Practical 2: UR student ===
+Pushing sequence: ['Class1', 'Class2', 'Class3']
+  Pushed -> Class1  | Stack now (bottom->top): ['Class1']
+  Pushed -> Class2  | Stack now (bottom->top): ['Class1', 'Class2']
+  Pushed -> Class3  | Stack now (bottom->top): ['Class1', 'Class2', 'Class3']
+
+Popped (removed): 'Class3'
+Top after pop: Class2
+
+=== Challenge: Reverse 'ICTRWANDA' using a stack ===
+Original string: ICTRWANDA
+
+Step 1: Push each character onto stack (showing pushes):
+  push('I') -> stack: ['I']
+  push('C') -> stack: ['I', 'C']
+  push('T') -> stack: ['I', 'C', 'T']
+  push('R') -> stack: ['I', 'C', 'T', 'R']
+  push('W') -> stack: ['I', 'C', 'T', 'R', 'W']
+  push('A') -> stack: ['I', 'C', 'T', 'R', 'W', 'A']
+  push('N') -> stack: ['I', 'C', 'T', 'R', 'W', 'A', 'N']
+  push('D') -> stack: ['I', 'C', 'T', 'R', 'W', 'A', 'N', 'D']
+  push('A') -> stack: ['I', 'C', 'T', 'R', 'W', 'A', 'N', 'D', 'A']
+
+Step 2: Pop each character to build reversed string (showing pops):
+  pop() -> 'A' | reversed so far: A
+  pop() -> 'D' | reversed so far: AD
+  pop() -> 'N' | reversed so far: ADN
+  pop() -> 'A' | reversed so far: ADNA
+  pop() -> 'W' | reversed so far: ADNAW
+  pop() -> 'R' | reversed so far: ADNAWR
+  pop() -> 'T' | reversed so far: ADNAWRT
+  pop() -> 'C' | reversed so far: ADNAWRTC
+  pop() -> 'I' | reversed so far: ADNAWRTCI
+
+Reversed string result: ADNAWRTCI 
+
+=== Queue Practical: CHUK (8 patients) ===
+Initial queue (front->rear): ['Patient1', 'Patient2', 'Patient3', 'Patient4', 'Patient5', 'Patient6', 'Patient7', 'Patient8']
+Serve 4 patients (dequeue 4 times)...
+  Served: Patient1
+  Served: Patient2
+  Served: Patient3
+  Served: Patient4
+Front of queue now: Patient5 
+
+=== Queue Practical: Airtel (3 clients) ===
+Queue (front->rear): ['Client1', 'Client2', 'Client3']
+First served (who is served first?): Client1 
+
+=== Challenge: Queue vs Stack for Food Delivery ===
+Incoming orders (in time order): ['OrderA (10:00)', 'OrderB (10:01)', 'OrderC (10:02)', 'OrderD (10:03)']
+
+FIFO delivery assignment (dequeue earliest first):
+  Delivered -> OrderA (10:00) | FIFO deliveries so far: ['OrderA (10:00)']
+  Delivered -> OrderB (10:01) | FIFO deliveries so far: ['OrderA (10:00)', 'OrderB (10:01)']
+  Delivered -> OrderC (10:02) | FIFO deliveries so far: ['OrderA (10:00)', 'OrderB (10:01)', 'OrderC (10:02)']
+  Delivered -> OrderD (10:03) | FIFO deliveries so far: ['OrderA (10:00)', 'OrderB (10:01)', 'OrderC (10:02)', 'OrderD (10:03)']
+
+LIFO delivery assignment (stack: last order assigned first):
+  Delivered -> OrderD (10:03) | LIFO deliveries so far: ['OrderD (10:03)']
+  Delivered -> OrderC (10:02) | LIFO deliveries so far: ['OrderD (10:03)', 'OrderC (10:02)']
+  Delivered -> OrderB (10:01) | LIFO deliveries so far: ['OrderD (10:03)', 'OrderC (10:02)', 'OrderB (10:01)']
+  Delivered -> OrderA (10:00) | LIFO deliveries so far: ['OrderD (10:03)', 'OrderC (10:02)', 'OrderB (10:01)', 'OrderA (10:00)']
+
+Summary:
+  FIFO order delivered: ['OrderA (10:00)', 'OrderB (10:01)', 'OrderC (10:02)', 'OrderD (10:03)']
+  LIFO order delivered: ['OrderD (10:03)', 'OrderC (10:02)', 'OrderB (10:01)', 'OrderA (10:00)']
+
+=== End of code demonstrations ===
+
+Complete code (Python) — pushes ["Fill Form","Upload File","Confirm"], undoes one (pop):
+# Irembo stack demo
+stack = []
+operations = ["Fill Form", "Upload File", "Confirm"]
+
+for op in operations:
+    stack.append(op)    # push
+
+popped = stack.pop()    # undo (pop one)
+# remaining items are in `stack`
+
+Complete code (Python) — pushes ["Class1","Class2","Class3"], pops one, then asks which is top:
+# UR student stack demo
+stack = []
+classes = ["Class1", "Class2", "Class3"]
+
+for c in classes:
+    stack.append(c)   # push
+
+popped = stack.pop()  # pop one (removes "Class3")
+top = stack[-1] if stack else None
+Stack — Challenge
+
+Reverse "ICTRWANDA" using a stack
+
+Algorithm (clear, numbered)
+
+Initialize an empty stack.
+
+Push every character of the input string (left-to-right) onto the stack.
+
+After this, the stack top holds the last character of the original string.
+
+Pop characters from the stack one-by-one and append them to the output — popping yields characters in reverse order (LIFO).
+
+Return the joined popped characters as the reversed string.
+def reverse_with_stack(s):
+    stack = []
+    # Step 2: push each char
+    for ch in s:
+        stack.append(ch)
+    # Step 3: pop to build reversed string
+    reversed_chars = []
+    while stack:
+        reversed_chars.append(stack.pop())
+    return ''.join(reversed_chars)
+
+result = reverse_with_stack("ICTRWANDA")
+# result == "ADNAWRTCI"
+Step-by-step explanation mapped to code lines
+
+stack = [] → (Step 1) create an empty stack.
+
+for ch in s: stack.append(ch) → (Step 2) push each character; pushing preserves original order in the stack from bottom→top.
+
+reversed_chars = [] → prepare container for popped chars.
+
+while stack: reversed_chars.append(stack.pop()) → (Step 3) pop until empty; each pop() returns the most recently pushed character, so characters are appended in reverse order.
+
+return ''.join(reversed_chars) → (Step 4) get the reversed string.
+
+Example output: "ICTRWANDA" reversed → "ADNAWRTCI".
+CHUK (8 patients). After 4 served, who is front?
+
+We label patients Patient1 … Patient8 in arrival order (front initially = Patient1).
+
+Serve (dequeue) 4 people: Patient1, Patient2, Patient3, Patient4 are removed.
+
+New front becomes Patient5.
+
+Answer: Patient5 is now at the front.
+
+Airtel (3 clients). Who is served first?
+
+Clients Client1, Client2, Client3 queued in arrival order (front = Client1).
+
+Answer: Client1 is served first (FIFO).
+Queue vs Stack for food delivery — which is realistic?
+
+Queue (FIFO) is more realistic for typical food delivery dispatch when the goal is fairness and predictable wait times. (There are exceptions — e.g., priority/express orders or batching logic — but FIFO is the common base discipline.)
+Algorithm (FIFO):
+
+Keep incoming orders in a queue in arrival order.
+
+While queue not empty: dequeue (remove from front) and assign to next available delivery agent.
+
+Algorithm (LIFO):
+
+Keep incoming orders in a stack (last pushed is top).
+
+While stack not empty: pop from top and assign.
+Why FIFO is realistic:
+
+FIFO serves the earliest orders first — customers expect the person who ordered earlier to be served earlier.
+
+It minimizes unfair long waits from late reordering (no “starvation” for early orders).
+
+In the small simulation you can observe:
+
+FIFO delivery order: OrderA, OrderB, OrderC, OrderD
+
+LIFO delivery order: OrderD, OrderC, OrderB, OrderA — the newest orders jump ahead, which is usually perceived as unfair by customers and can increase maximum waiting time.
+
+When LIFO might be used: quick last-minute close-by pickups handled by the same courier who just accepted it (rare), or when stack-like storage constraints force LIFO retrieval — but for customer-facing delivery fairness, FIFO is the right baseline.
+Reflections
+1) Why stack fits undo but not fairness
+
+Undo semantics: An undo operation should reverse the most recent action. That is exactly LIFO behavior — the last action is the first to be undone, which prevents inconsistent state reversal.
+
+Fairness mismatch: Fairness usually requires each participant/request be treated in arrival order (FIFO), or according to priority rules that avoid starvation.
+
+2) Why FIFO ensures customer satisfaction
+
+Predictability & fairness: Customers expect that earlier arrivals receive service earlier. FIFO enforces this, so people feel treated fairly.
+
+Bounded waiting times: Under FIFO, each incoming job’s waiting time depends on the work of jobs before it; it prevents a late arrival from jumping ahead and causing unbounded waits for earlier customers.
+
+Sensible average-case behavior: In many service models (e.g., M/M/1 queue), FIFO minimizes average waiting time under equal service-time distributions and provides stable, analyzable performance guarantees.
+
+Psychology of fairness: Perception matters — customers perceive FIFO as equitable, reducing customer complaints even when absolute wait times are nontrivial.
+
+Exceptions: Real systems often extend FIFO with priority queues (e.g., express lanes) or batching to optimize latency — but these are explicit policies that still leave FIFO as the base fairness model.
+END
