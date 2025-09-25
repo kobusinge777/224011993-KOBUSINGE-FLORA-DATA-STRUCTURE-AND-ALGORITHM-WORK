@@ -1,232 +1,139 @@
-Stack Questions:
-Question 1 (Irembo)
-Push ["Fill Form", "Upload File", "Confirm"].
-Undo (pop) one. Which is left?
-# Stack Example - Irembo
-stack = []
+# Stack & Queue demonstrations for Project 57
+# This cell runs the practical code and prints "screenshot-style" outputs for the first two practical stack questions,
+# and also demonstrates the challenge and queue practicals for clarity.
 
-# Push operations
-stack.append("Fill Form")
-stack.append("Upload File")
-stack.append("Confirm")
+# ---------- Stack Practical 1 (Irembo) ----------
+print("=== Stack Practical 1: Irembo ===")
+stack_irembo = []
+operations_irembo = ["Fill Form", "Upload File", "Confirm"]
 
-print("Initial stack:", stack)
+print("Pushing sequence:", operations_irembo)
+for op in operations_irembo:
+    stack_irembo.append(op)
+    print(f"  Pushed -> {op:12} | Stack now (bottom->top): {stack_irembo}")
 
 # Undo one (pop)
-removed = stack.pop()
-print("After undo (pop):", stack)
-print("Removed item:", removed)
+popped_irembo = stack_irembo.pop()
+print(f"\nUndo operation (pop): removed '{popped_irembo}'")
+print("Remaining stack (bottom->top):", stack_irembo)
+
+# Screenshot-style output for practical 1
+print("\n+------------------------------+")
+print("|  SCREENSHOT: IREMBO STACK   |")
+print("+------------------------------+")
+print("| After pushing: ['Fill Form',|")
+print("|                'Upload File',|")
+print("|                'Confirm']   |")
+print("| After undo (pop): 'Confirm' |")
+print("| Remaining (bottom->top):     |")
+for item in stack_irembo:
+    print(f"|   {item.ljust(24)}|")
+print("+------------------------------+\n")
 
 
-Question 2 (UR Student)
-Push ["Class1", "Class2", "Class3"].
-Pop one. Which is top?
-# Stack Example - UR Student
-stack = []
-
-# Push operations
-stack.append("Class1")
-stack.append("Class2")
-stack.append("Class3")
-
-print("Initial stack:", stack)
+# ---------- Stack Practical 2 (UR student) ----------
+print("=== Stack Practical 2: UR student ===")
+stack_ur = []
+classes = ["Class1", "Class2", "Class3"]
+print("Pushing sequence:", classes)
+for c in classes:
+    stack_ur.append(c)
+    print(f"  Pushed -> {c:7} | Stack now (bottom->top): {stack_ur}")
 
 # Pop one
-removed = stack.pop()
-print("After pop:", stack)
-print("Removed item:", removed)
+popped_ur = stack_ur.pop()
+print(f"\nPopped (removed): '{popped_ur}'")
+top_after_pop = stack_ur[-1] if stack_ur else None
+print("Top after pop:", top_after_pop)
 
-# Check top element
-if stack:
-    print("Top of stack:", stack[-1])
-else:
-    print("Stack is empty.")
+# Screenshot-style output for practical 2
+print("\n+---------------------------+")
+print("|  SCREENSHOT: UR STACK    |")
+print("+---------------------------+")
+print("| After pushing: ['Class1',|")
+print("|                'Class2', |")
+print("|                'Class3'] |")
+print("| After pop: 'Class3'      |")
+print("| Top now:                 |")
+print(f"|   {str(top_after_pop).ljust(23)}|")
+print("+---------------------------+\n")
 
-Q1 Answer: After undo, left stack = ["Fill Form", "Upload File"].
 
-Q2 Answer: After popping one, top = "Class2".
-
-Challenge — Reverse "ICTRWANDA" using a stack
-Algorithm (high level)
-
-Create an empty stack.
-
-Traverse the string left → right and push each character onto the stack.
-
-Create an empty result string.
-
-Pop characters from the stack until it’s empty, appending each popped character to the result.
-
-The result is the reversed string.
-
-# Step 1: create an empty stack
-stack = []                     # (1)
-
-# Input string
-s = "ICTRWANDA"                # (given)
-
-# Step 2: push each character onto the stack
-for ch in s:                   # (2)
-    stack.append(ch)           # (2)
-
-# Step 3: prepare an empty result string
-reversed_s = ""                # (3)
-
-# Step 4: pop until stack empty and build reversed string
-while stack:                   # (4)
-    reversed_s += stack.pop()  # (4)
-
-# Step 5: print result
+# ---------- Challenge: Reverse "ICTRWANDA" using a stack ----------
+print("=== Challenge: Reverse 'ICTRWANDA' using a stack ===")
+s = "ICTRWANDA"
 print("Original string:", s)
-print("Reversed using stack:", reversed_s)
 
-Line-by-line explanation (mapping algorithm → code)
+# Use a Python list as stack
+stack_chars = []
+print("\nStep 1: Push each character onto stack (showing pushes):")
+for ch in s:
+    stack_chars.append(ch)
+    print(f"  push('{ch}') -> stack: {stack_chars}")
 
-(1) stack = [] — Algorithm step 1: allocate an empty stack (we use a Python list as the stack).
+reversed_chars = []
+print("\nStep 2: Pop each character to build reversed string (showing pops):")
+while stack_chars:
+    popped = stack_chars.pop()
+    reversed_chars.append(popped)
+    print(f"  pop() -> '{popped}' | reversed so far: {''.join(reversed_chars)}")
 
-(given) s = "ICTRWANDA" — the input to reverse.
+reversed_s = ''.join(reversed_chars)
+print("\nReversed string result:", reversed_s, "\n")
 
-(2) for ch in s: stack.append(ch) — Algorithm step 2: iterate each character and push it onto the stack. After this loop, the top of stack holds the last character of s.
 
-(3) reversed_s = "" — Algorithm step 3: prepare an empty string to collect popped characters.
-
-(4) while stack: reversed_s += stack.pop() — Algorithm step 4: pop characters off the stack (LIFO) and append to reversed_s; this produces the characters in reverse order.
-
-(5) print(...) — show original and reversed strings.
-Reflection — Why stack fits undo but not fairness
-
-Why stack fits undo
-
-Undo is a last action undone first behavior: the most recent change should be reverted first.
-
-A stack implements LIFO (Last-In, First-Out) exactly — push actions as they happen, pop to undo the last one.
-
-Example: typing edits in a text editor — the last keystroke or edit is the one you expect to undo.
-
-Why stack does not ensure fairness
-
-Fairness usually means first-come, first-served (or some form of equal opportunity), so that earlier requests are handled before later ones. That is a FIFO (queue) property, not LIFO.
-
-A stack favors the most recent requester, which can starve older requests — clearly unfair when you want everyone to wait their turn (e.g., customer service, CPU time-sharing).
-
-For fairness you’d use a queue (FIFO) or scheduling algorithms (round-robin, priority queues) depending on the fairness policy required.
- 
-Queue Questions
-Queue Question 1 (CHUK Patients)
-
-At CHUK, 8 patients queue. After 4 served, who is at the front?
+# ---------- Queue Practical: CHUK (8 patients, 4 served) ----------
 from collections import deque
+print("=== Queue Practical: CHUK (8 patients) ===")
+patients = [f"Patient{i}" for i in range(1,9)]  # Patient1 .. Patient8
+q = deque(patients)
+print("Initial queue (front->rear):", list(q))
 
-# Create a queue with 8 patients
-queue = deque(["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"])
-print("Initial queue:", list(queue))
+served = 4
+print(f"Serve {served} patients (dequeue {served} times)...")
+for _ in range(served):
+    served_patient = q.popleft()
+    print(f"  Served: {served_patient}")
 
-# Serve (dequeue) 4 patients
-for _ in range(4):
-    served = queue.popleft()
-    print("Served:", served)
-
-# Who is now at the front?
-print("Queue after 4 served:", list(queue))
-print("Front of queue now:", queue[0])
-
-Queue Question 2 (Airtel Clients)
-
-At Airtel, 3 clients queue. Who is served first?
-from collections import deque
-
-# Create a queue with 3 clients
-queue = deque(["Client1", "Client2", "Client3"])
-print("Initial queue:", list(queue))
-
-# First served (dequeue one)
-served = queue.popleft()
-print("First served:", served)
-print("Queue after serving one:", list(queue))
-CHUK → After 4 served, front is Patient 5.
-
-Airtel → The first served is Client 1.
-Queue Questions:
-A — Queue (recommended / realistic)
-Algorithm (high level)
-
-Create an empty queue.
-
-Accept incoming orders in arrival order and enqueue each at the rear.
-
-When a delivery resource (rider/courier) is available, dequeue the front order and dispatch it.
-
-Record service times and served sequence for monitoring and metrics.
-from collections import deque
-
-# (1) Create an empty queue
-order_queue = deque()                           # (1)
-
-# (2) Sample incoming orders in arrival order
-incoming_orders = ["Order1", "Order2", "Order3", "Order4"]  # (2)
-
-# (2) Enqueue each arriving order
-for o in incoming_orders:                       
-    order_queue.append(o)                       # (2)
-
-# prepare trackers
-served_sequence = []                            # (4)
-service_time = 10                               # assume constant service time unit
-current_time = 0                                # timeline for completion times
-wait_times = {}                                 # store completion time per order
-
-# (3) Serve orders FIFO: when rider available, dequeue front
-while order_queue:                              # (3)
-    current_time += service_time
-    served = order_queue.popleft()              # (3)
-    served_sequence.append(served)              # (4)
-    wait_times[served] = current_time           # (4)
-
-Explanation (mapping)
-
-(1) order_queue = deque() → set up FIFO container.
-
-(2) order_queue.append(o) → push each new order to the rear as it arrives.
-
-(3) order_queue.popleft() inside the while → remove the oldest (front) order for delivery (FIFO dispatch).
-
-(4) Track served_sequence and wait_times for operational metrics.
-B — Stack (LIFO) — why it’s unrealistic for customer orders
-Algorithm (high level)
-
-Create an empty stack.
-
-Push incoming orders onto the stack (newest on top).
-
-When a delivery resource is available, pop the top order and dispatch it.
-
-Record served sequence and metrics.
-
-Explanation (mapping)
-
-(1) stack = [] → LIFO container.
-
-(2) stack.append(o) → newest orders go on top.
-
-(3) stack.pop() → the most recent order is served first (LIFO).
-
-(4) As before, collect metrics.
+front_after = q[0] if q else None
+print("Front of queue now:", front_after, "\n")
 
 
-Comparison & practical reasons queue wins
+# ---------- Queue Practical: Airtel (3 clients) ----------
+print("=== Queue Practical: Airtel (3 clients) ===")
+clients = ["Client1", "Client2", "Client3"]
+qa = deque(clients)
+print("Queue (front->rear):", list(qa))
+first_served = qa.popleft()
+print("First served (who is served first?):", first_served, "\n")
 
-Customer expectation & fairness: Customers expect “first-in, first-out” — whoever ordered first should not be made to wait while newer orders jump the line. Queue matches that.
 
-Perceived wait & complaints: Serving newest orders first (stack) makes early customers wait longer and increases complaints / cancellations.
+# ---------- Challenge: Queue vs Stack for food delivery (simulation) ----------
+print("=== Challenge: Queue vs Stack for Food Delivery ===")
+orders = ["OrderA (10:00)", "OrderB (10:01)", "OrderC (10:02)", "OrderD (10:03)"]
+print("Incoming orders (in time order):", orders)
 
-Starvation risk: If new orders keep arriving and you always pop the newest, earlier orders may be delayed indefinitely — unacceptable in service scenarios.
+# FIFO simulation (queue)
+fifo = deque(orders)
+fifo_delivery_order = []
+print("\nFIFO delivery assignment (dequeue earliest first):")
+while fifo:
+    assign = fifo.popleft()
+    fifo_delivery_order.append(assign)
+    print(f"  Delivered -> {assign} | FIFO deliveries so far: {fifo_delivery_order}")
 
-Operational visibility & SLAs: Queues are easy to monitor (average wait, max wait, percent served within target). Priority variants (e.g., express, VIP) can be added atop queues — more practical than pure LIFO.
+# LIFO simulation (stack)
+lifo = list(orders)
+lifo_delivery_order = []
+print("\nLIFO delivery assignment (stack: last order assigned first):")
+while lifo:
+    assign = lifo.pop()
+    lifo_delivery_order.append(assign)
+    print(f"  Delivered -> {assign} | LIFO deliveries so far: {lifo_delivery_order}")
 
-reflection — Why FIFO ensures customer satisfaction
+print("\nSummary:")
+print("  FIFO order delivered:", fifo_delivery_order)
+print("  LIFO order delivered:", lifo_delivery_order)
 
-Fairness and justice: FIFO implements first-come, first-served — a simple fairness principle. Customers perceive this as equitable; perception of fairness strongly influences satisfaction and trust.
-
-Predictability: FIFO gives customers an understandable position in line and a predictable relationship between arrival time and service order. Predictability reduces anxiety and uncertainty about how long they’ll wait.
-
-Bounded waiting and no starvation: FIFO prevents newer arrivals from displacing earlier ones; everyone who arrives will eventually be served. This avoids starvation and extreme delays, which are strong drivers of dissatisfaction.
+# End of demonstrations
+print("\n=== End of code demonstrations ===")
