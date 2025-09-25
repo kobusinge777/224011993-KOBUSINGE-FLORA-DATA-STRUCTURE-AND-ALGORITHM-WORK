@@ -1,0 +1,232 @@
+Stack Questions:
+Question 1 (Irembo)
+Push ["Fill Form", "Upload File", "Confirm"].
+Undo (pop) one. Which is left?
+# Stack Example - Irembo
+stack = []
+
+# Push operations
+stack.append("Fill Form")
+stack.append("Upload File")
+stack.append("Confirm")
+
+print("Initial stack:", stack)
+
+# Undo one (pop)
+removed = stack.pop()
+print("After undo (pop):", stack)
+print("Removed item:", removed)
+
+
+Question 2 (UR Student)
+Push ["Class1", "Class2", "Class3"].
+Pop one. Which is top?
+# Stack Example - UR Student
+stack = []
+
+# Push operations
+stack.append("Class1")
+stack.append("Class2")
+stack.append("Class3")
+
+print("Initial stack:", stack)
+
+# Pop one
+removed = stack.pop()
+print("After pop:", stack)
+print("Removed item:", removed)
+
+# Check top element
+if stack:
+    print("Top of stack:", stack[-1])
+else:
+    print("Stack is empty.")
+
+Q1 Answer: After undo, left stack = ["Fill Form", "Upload File"].
+
+Q2 Answer: After popping one, top = "Class2".
+
+Challenge — Reverse "ICTRWANDA" using a stack
+Algorithm (high level)
+
+Create an empty stack.
+
+Traverse the string left → right and push each character onto the stack.
+
+Create an empty result string.
+
+Pop characters from the stack until it’s empty, appending each popped character to the result.
+
+The result is the reversed string.
+
+# Step 1: create an empty stack
+stack = []                     # (1)
+
+# Input string
+s = "ICTRWANDA"                # (given)
+
+# Step 2: push each character onto the stack
+for ch in s:                   # (2)
+    stack.append(ch)           # (2)
+
+# Step 3: prepare an empty result string
+reversed_s = ""                # (3)
+
+# Step 4: pop until stack empty and build reversed string
+while stack:                   # (4)
+    reversed_s += stack.pop()  # (4)
+
+# Step 5: print result
+print("Original string:", s)
+print("Reversed using stack:", reversed_s)
+
+Line-by-line explanation (mapping algorithm → code)
+
+(1) stack = [] — Algorithm step 1: allocate an empty stack (we use a Python list as the stack).
+
+(given) s = "ICTRWANDA" — the input to reverse.
+
+(2) for ch in s: stack.append(ch) — Algorithm step 2: iterate each character and push it onto the stack. After this loop, the top of stack holds the last character of s.
+
+(3) reversed_s = "" — Algorithm step 3: prepare an empty string to collect popped characters.
+
+(4) while stack: reversed_s += stack.pop() — Algorithm step 4: pop characters off the stack (LIFO) and append to reversed_s; this produces the characters in reverse order.
+
+(5) print(...) — show original and reversed strings.
+Reflection — Why stack fits undo but not fairness
+
+Why stack fits undo
+
+Undo is a last action undone first behavior: the most recent change should be reverted first.
+
+A stack implements LIFO (Last-In, First-Out) exactly — push actions as they happen, pop to undo the last one.
+
+Example: typing edits in a text editor — the last keystroke or edit is the one you expect to undo.
+
+Why stack does not ensure fairness
+
+Fairness usually means first-come, first-served (or some form of equal opportunity), so that earlier requests are handled before later ones. That is a FIFO (queue) property, not LIFO.
+
+A stack favors the most recent requester, which can starve older requests — clearly unfair when you want everyone to wait their turn (e.g., customer service, CPU time-sharing).
+
+For fairness you’d use a queue (FIFO) or scheduling algorithms (round-robin, priority queues) depending on the fairness policy required.
+ 
+Queue Questions
+Queue Question 1 (CHUK Patients)
+
+At CHUK, 8 patients queue. After 4 served, who is at the front?
+from collections import deque
+
+# Create a queue with 8 patients
+queue = deque(["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"])
+print("Initial queue:", list(queue))
+
+# Serve (dequeue) 4 patients
+for _ in range(4):
+    served = queue.popleft()
+    print("Served:", served)
+
+# Who is now at the front?
+print("Queue after 4 served:", list(queue))
+print("Front of queue now:", queue[0])
+
+Queue Question 2 (Airtel Clients)
+
+At Airtel, 3 clients queue. Who is served first?
+from collections import deque
+
+# Create a queue with 3 clients
+queue = deque(["Client1", "Client2", "Client3"])
+print("Initial queue:", list(queue))
+
+# First served (dequeue one)
+served = queue.popleft()
+print("First served:", served)
+print("Queue after serving one:", list(queue))
+CHUK → After 4 served, front is Patient 5.
+
+Airtel → The first served is Client 1.
+Queue Questions:
+A — Queue (recommended / realistic)
+Algorithm (high level)
+
+Create an empty queue.
+
+Accept incoming orders in arrival order and enqueue each at the rear.
+
+When a delivery resource (rider/courier) is available, dequeue the front order and dispatch it.
+
+Record service times and served sequence for monitoring and metrics.
+from collections import deque
+
+# (1) Create an empty queue
+order_queue = deque()                           # (1)
+
+# (2) Sample incoming orders in arrival order
+incoming_orders = ["Order1", "Order2", "Order3", "Order4"]  # (2)
+
+# (2) Enqueue each arriving order
+for o in incoming_orders:                       
+    order_queue.append(o)                       # (2)
+
+# prepare trackers
+served_sequence = []                            # (4)
+service_time = 10                               # assume constant service time unit
+current_time = 0                                # timeline for completion times
+wait_times = {}                                 # store completion time per order
+
+# (3) Serve orders FIFO: when rider available, dequeue front
+while order_queue:                              # (3)
+    current_time += service_time
+    served = order_queue.popleft()              # (3)
+    served_sequence.append(served)              # (4)
+    wait_times[served] = current_time           # (4)
+
+Explanation (mapping)
+
+(1) order_queue = deque() → set up FIFO container.
+
+(2) order_queue.append(o) → push each new order to the rear as it arrives.
+
+(3) order_queue.popleft() inside the while → remove the oldest (front) order for delivery (FIFO dispatch).
+
+(4) Track served_sequence and wait_times for operational metrics.
+B — Stack (LIFO) — why it’s unrealistic for customer orders
+Algorithm (high level)
+
+Create an empty stack.
+
+Push incoming orders onto the stack (newest on top).
+
+When a delivery resource is available, pop the top order and dispatch it.
+
+Record served sequence and metrics.
+
+Explanation (mapping)
+
+(1) stack = [] → LIFO container.
+
+(2) stack.append(o) → newest orders go on top.
+
+(3) stack.pop() → the most recent order is served first (LIFO).
+
+(4) As before, collect metrics.
+
+
+Comparison & practical reasons queue wins
+
+Customer expectation & fairness: Customers expect “first-in, first-out” — whoever ordered first should not be made to wait while newer orders jump the line. Queue matches that.
+
+Perceived wait & complaints: Serving newest orders first (stack) makes early customers wait longer and increases complaints / cancellations.
+
+Starvation risk: If new orders keep arriving and you always pop the newest, earlier orders may be delayed indefinitely — unacceptable in service scenarios.
+
+Operational visibility & SLAs: Queues are easy to monitor (average wait, max wait, percent served within target). Priority variants (e.g., express, VIP) can be added atop queues — more practical than pure LIFO.
+
+reflection — Why FIFO ensures customer satisfaction
+
+Fairness and justice: FIFO implements first-come, first-served — a simple fairness principle. Customers perceive this as equitable; perception of fairness strongly influences satisfaction and trust.
+
+Predictability: FIFO gives customers an understandable position in line and a predictable relationship between arrival time and service order. Predictability reduces anxiety and uncertainty about how long they’ll wait.
+
+Bounded waiting and no starvation: FIFO prevents newer arrivals from displacing earlier ones; everyone who arrives will eventually be served. This avoids starvation and extreme delays, which are strong drivers of dissatisfaction.
